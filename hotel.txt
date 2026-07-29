@@ -1,0 +1,74 @@
+CREATE TABLE cliente (
+    codcliente INT PRIMARY KEY AUTO_INCREMENT,
+    cliente VARCHAR(255) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL
+);
+
+CREATE TABLE quarto (
+    codquarto INT PRIMARY KEY AUTO_INCREMENT,
+    quarto VARCHAR(255) NOT NULL,
+    andar INT NOT NULL,
+    tipo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE servico (
+    codservico INT PRIMARY KEY AUTO_INCREMENT,
+    servico VARCHAR(255) NOT NULL,
+    qtde INT NOT NULL,
+    valor DECIMAL(7,2) NOT NULL,
+    tipo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE hospedagem (
+    idhospedagem INT PRIMARY KEY AUTO_INCREMENT,
+    dataentrada DATE NOT NULL,
+    datasaida DATE,
+    horaentrada TIME NOT NULL,
+    horasaida TIME,
+    totalhospedagem DECIMAL(7,2),
+
+INSERT INTO quarto (quarto, andar, tipo) VALUES
+('11', '1 andar','familia - quarto'),
+('4', '1 andar','solteiro - quarto'),
+('88', '1 andar','casal - quarto'),
+('66', '1 andar','casal - quarto'),
+('53', '2 andar','familia - quarto'),
+('23', '2 andar','familia - quarto'),
+('32', '2 andar','casal - quarto'),
+('12', '3 andar','casal - quarto'),
+('12', '3 andar','solteiro - quarto'),
+('64', '3 andar','solteiro - quarto'),
+('34', '3 andar','solteiro - quarto');
+
+INSERT INTO servico (servico, tipo, qtde, valor) VALUES
+('Pepsi Lata 350ml', 'Bebidas', '200', '5.00'),
+('Coca-Cola Lata 350ml', 'Bebidas', '180', '6.00'),
+('Guaraná Lata 350ml', 'Bebidas', '150', '5.50'),
+('Água Mineral 500ml', 'Bebidas', '300', '3.50'),
+('Suco de Laranja', 'Bebidas', '100', '8.00'),
+('Café Pequeno', 'Bebidas', '500', '4.00'),
+('Café Grande', 'Bebidas', '250', '6.00'),
+('Hambúrguer Artesanal', 'Comidas', '50', '28.00'),
+('X-Burger', 'Comidas', '80', '25.00'),
+('X-Salada', 'Comidas', '70', '30.00'),
+('Batata Frita', 'Comidas', '120', '18.00'),
+('Pizza Calabresa', 'Comidas', '40', '55.00'),
+('Pizza Mussarela', 'Comidas', '40', '52.00'),
+('Sanduíche Natural', 'Comidas', '60', '15.00');
+    codcli INT,
+    codquarto INT,
+    FOREIGN KEY (codcli) REFERENCES cliente(codcliente),
+    FOREIGN KEY (codquarto) REFERENCES quarto(codquarto)
+);
+
+CREATE TABLE servicoshospedagem (
+    idhospedagem INT,
+    idservico INT,
+    dataservico DATE NOT NULL,
+    horaservico TIME NOT NULL,
+    total DECIMAL(7,2),
+    PRIMARY KEY (idhospedagem, idservico, dataservico, horaservico),
+    FOREIGN KEY (idhospedagem) REFERENCES hospedagem(idhospedagem),
+    FOREIGN KEY (idservico) REFERENCES servico(codservico)
+);
